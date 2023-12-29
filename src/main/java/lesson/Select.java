@@ -47,7 +47,7 @@ public class Select implements Sorted{
     public void printFirstNamePhone(){
         var todoCollection = getTodoCollection();
         todoCollection.find(new Document(), new Document("firstName", 1).append("phone", 1))  // Вот здесь еще ошибка
-                .forEach((Consumer<Document>) System.out::println);
+                .forEach((Consumer<Document>) System.out::println);                             //
     }
 
 }
