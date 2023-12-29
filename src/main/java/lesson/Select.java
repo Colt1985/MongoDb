@@ -9,7 +9,7 @@ import org.bson.Document;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class Select implements Sorted{
+public class Select implements Sorted,PrintDB{
 
     public MongoCollection<Document> getTodoCollection() {
         var mongoClient = MongoClients.create();
