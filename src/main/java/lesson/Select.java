@@ -1,51 +1,55 @@
 package lesson;
 
 import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class Select {
+public class Select implements Sorted{
 
+    public MongoCollection<Document> getTodoCollection() {
+        var mongoClient = MongoClients.create();
+        var database = mongoClient.getDatabase("mongo");
+        return database.getCollection("todo");
+    }
+@Override
     public void printAllTable() {
-        try (var mongoClient = MongoClients.create()) {                             // Начало
-            mongoClient.listDatabases()                                             // Как вывести этот код в отдельный метод, а то в следующем методе код повторяется
-                    .forEach((Consumer<Document>) System.out::println);
-            mongoClient.listDatabaseNames()
-                    .forEach((Consumer<String>) System.out::println);
-            var database = mongoClient.getDatabase("mongo");
-            database.listCollectionNames()
-                    .forEach((Consumer<String>) System.out::println);
-            // todo
-            database.listCollections()
-                    .forEach((Consumer<Document>) System.out::println);
-
-            var todoCollection = database.getCollection("todo");                // Конец
-
-            todoCollection.find()      //Вывод всей таблицы
-                    .forEach((Consumer<Document>) System.out::println);
-        }
+        var todoCollection = getTodoCollection();
+        todoCollection.find().forEach((Consumer<Document>) System.out::println);
     }
 
+@Override
     public void printTableFirstNameLastNameHireDate() {
-        try (var mongoClient = MongoClients.create()) {
-            mongoClient.listDatabases()
-                    .forEach((Consumer<Document>) System.out::println);
-            mongoClient.listDatabaseNames()
-                    .forEach((Consumer<String>) System.out::println);
-            var database = mongoClient.getDatabase("mongo");
-            database.listCollectionNames()
-                    .forEach((Consumer<String>) System.out::println);
-            // todo
-            database.listCollections()
-                    .forEach((Consumer<Document>) System.out::println);
 
-            var todoCollection = database.getCollection("todo");
+        var todoCollection = getTodoCollection();
 
+        // todoCollection.find(new Document(), new Document("firstName", 1).append("lastName", 1).append("hireDate", 1))
+          //      .forEach((Consumer<Document>) System.out::println);
+    }
 
-//            todoCollection.find(Filters.eq("lastName"))         //Вот здесь нужна помощь в фильтрации
-//                    .forEach((Consumer<Document>) System.out::println);
-        }
+    @Override
+    public void sortMaxMinSalary() {
+        var todoCollection = getTodoCollection();
+        todoCollection.find().sort(new Document("salary", -1))
+                .forEach((Consumer<Document>) System.out::println);
+    }
+    @Override
+    public void sortAverageSalary() {
+        var todoCollection = getTodoCollection();
+        todoCollection.aggregate(Arrays.asList(Aggregates.group("$null", Accumulators.avg("averageSalary", "$salary"))))
+                .forEach((Consumer<Document>) System.out::println);
+    }
+    @Override
+    public void printFirstNamePhone(){
+        var todoCollection = getTodoCollection();
+        todoCollection.find(new Document(), new Document("firstName", 1).append("phone", 1))  // Вот здесь еще ошибка
+                .forEach((Consumer<Document>) System.out::println);
     }
 
 }
+
+

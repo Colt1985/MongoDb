@@ -2,14 +2,9 @@ package lesson;
 
 import com.mongodb.client.MongoClients;
 import org.bson.Document;
-import com.mongodb.client.MongoClients;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 import java.util.function.Consumer;
 
 public class CreateDB {

@@ -24,8 +24,10 @@ public class Main {
         Select select = new Select();
 
        //1. select.printAllTable();
-        select.printTableFirstNameLastNameHireDate();
-
+        //    select.printTableFirstNameLastNameHireDate();
+       //3. select.sortMaxMinSalary();
+       //4. select.sortAverageSalary();
+        select.printFirstNamePhone();
         }
     }
 
