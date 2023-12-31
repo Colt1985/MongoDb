@@ -23,12 +23,12 @@ public class Main {
 
         Select select = new Select();
 
-       //1. select.printAllTable();
-        //    select.printTableFirstNameLastNameHireDate();
-       //3. select.sortMaxMinSalary();
-       //4. select.sortAverageSalary();
-        select.printFirstNamePhone();
-        }
+        //1. select.printAllTable();
+        //2. select.printTableFirstNameLastNameHireDate();
+        //3. select.sortMaxMinSalary();
+        //4. select.sortAverageSalary();
+        //5. select.printFirstNamePhone();
     }
+}
 
 
